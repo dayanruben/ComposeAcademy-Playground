@@ -1,10 +1,7 @@
 package co.joebirch.composeplayground.animation
 
 import androidx.compose.animation.core.*
-import androidx.compose.animation.transition
-import androidx.compose.foundation.Box
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.ContentGravity
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,6 +12,18 @@ import co.joebirch.composeplayground.ComposableLayout
 
 object GrowingCircleAnimationView : ComposableLayout {
 
+    @Composable
+    override fun build() {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(32.dp),
+            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            //GrowingCircleComponent()
+        }
+    }
+
+    /*
     private val shapeSize = FloatPropKey()
 
     private val sizeTransitionDefinition = transitionDefinition<String> {
@@ -37,28 +46,20 @@ object GrowingCircleAnimationView : ComposableLayout {
         }
     }
 
-    @Composable
-    override fun build() {
-        Column(
-            modifier = Modifier.fillMaxSize().padding(32.dp),
-            verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalGravity = Alignment.CenterHorizontally
-        ) {
-            GrowingCircleComponent()
-        }
-    }
 
     @Composable
     fun GrowingCircleComponent() {
-        Box(modifier = Modifier.fillMaxSize(), gravity = ContentGravity.Center, children = {
+        Box(modifier = Modifier.fillMaxSize()) {
             val state = transition(
                 definition = sizeTransitionDefinition,
                 initState = "A",
                 toState = "B"
             )
-            Canvas(modifier = Modifier.preferredSize(80.dp)) {
+            Canvas(modifier = Modifier.preferredSize(80.dp).align(Alignment.Center)) {
                 drawCircle(Color.Black, state[shapeSize])
             }
-        })
+        }
     }
+
+     */
 }

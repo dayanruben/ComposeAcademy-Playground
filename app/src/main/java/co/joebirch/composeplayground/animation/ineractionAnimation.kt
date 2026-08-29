@@ -1,26 +1,16 @@
 package co.joebirch.composeplayground.animation
 
 import android.graphics.PointF
-import androidx.compose.animation.core.*
-import androidx.compose.animation.transition
-import androidx.compose.foundation.Box
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.ContentGravity
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.state
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.gesture.pressIndicatorGestureFilter
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import co.joebirch.composeplayground.ComposableLayout
 
 object InteractionAnimationView : ComposableLayout {
 
-    private val shapeRadius = FloatPropKey()
+    //private val shapeRadius = FloatPropKey()
     private val down = PointF(0f, 0f)
 
     private enum class CircleStatus {
@@ -34,16 +24,16 @@ object InteractionAnimationView : ComposableLayout {
         Column(
             modifier = Modifier.fillMaxSize().padding(32.dp),
             verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalGravity = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TouchCircleComponent()
+            //TouchCircleComponent()
         }
     }
-
+/*
 
     @Composable
     fun TouchCircleComponent() {
-        val toState = state { CircleStatus.Idle }
+        val toState = remember { mutableStateOf(CircleStatus.Idle) }
         val rippleTransDef = remember { createTransDef() }
 
         val onPress: (Offset) -> Unit = { offset ->
@@ -56,7 +46,7 @@ object InteractionAnimationView : ComposableLayout {
         }
 
         Box(modifier = Modifier.fillMaxSize().pressIndicatorGestureFilter(
-            onStart = onPress, onStop = onRelease), gravity = ContentGravity.Center, children = {
+            onStart = onPress, onStop = onRelease)) {
             val state = transition(
                 definition = rippleTransDef,
                 toState = toState.value
@@ -64,7 +54,7 @@ object InteractionAnimationView : ComposableLayout {
             Canvas(modifier = Modifier.preferredSize(80.dp)) {
                 drawCircle(Color.Black, state[shapeRadius])
             }
-        })
+        }
     }
 
 
@@ -95,4 +85,6 @@ object InteractionAnimationView : ComposableLayout {
             snapTransition(CircleStatus.Released to CircleStatus.Idle)
         }
     }
+
+ */
 }

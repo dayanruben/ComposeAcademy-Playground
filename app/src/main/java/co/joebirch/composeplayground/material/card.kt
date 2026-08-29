@@ -1,14 +1,18 @@
 package co.joebirch.composeplayground.material
 
-import androidx.compose.foundation.Border
-import androidx.compose.foundation.Text
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.material.Text
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import co.joebirch.composeplayground.ComposableLayout
 
@@ -19,7 +23,7 @@ object CardView: ComposableLayout {
         Column(
             modifier = Modifier.fillMaxSize().padding(32.dp),
             verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalGravity = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             MinimalCardComponent()
             MultipleChildCardComponent()
@@ -43,6 +47,12 @@ fun MinimalCardComponent() {
     }
 }
 
+@Preview(showBackground = false)
+@Composable
+fun CardPreview() {
+    MinimalCardComponent()
+}
+
 @Composable
 fun MultipleChildCardComponent() {
     Card {
@@ -51,20 +61,26 @@ fun MultipleChildCardComponent() {
                 text = "Jetpack",
                 modifier = Modifier.padding(16.dp)
             )
-            Spacer(modifier = Modifier.preferredHeight(8.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Compose",
                 modifier = Modifier.padding(16.dp)
             )
         }
-
     }
+}
+
+@Preview(showBackground = false)
+@Composable
+fun CardMultipleChildPreview() {
+    MultipleChildCardComponent()
 }
 
 @Composable
 fun ShapeCardComponent() {
     Card(
-        shape = RoundedCornerShape(3.dp)
+        shape = RectangleShape,
+        backgroundColor = Color.LightGray
     ) {
         Text(
             text = "Jetpack Compose",
@@ -76,7 +92,7 @@ fun ShapeCardComponent() {
 @Composable
 fun ColorCardComponent() {
     Card(
-        color = Color.LightGray
+        backgroundColor = Color.LightGray
     ) {
         Text(
             text = "Jetpack Compose",
@@ -88,7 +104,7 @@ fun ColorCardComponent() {
 @Composable
 fun ContentColorCardComponent() {
     Card(
-        color = Color.Black,
+        backgroundColor = Color.Black,
         contentColor = Color.White
     ) {
         Text(
@@ -101,7 +117,7 @@ fun ContentColorCardComponent() {
 @Composable
 fun BorderCardComponent() {
     Card(
-        border = Border(2.dp, Color.Black)
+        border = BorderStroke(2.dp, Color.Black)
     ) {
         Text(
             text = "Jetpack Compose",
@@ -119,5 +135,66 @@ fun ElevationCardComponent() {
             text = "Jetpack Compose",
             modifier = Modifier.padding(16.dp)
         )
+    }
+}
+
+
+@Preview
+@Composable
+fun ElevationCardComponent_Preview() {
+    Box(
+        modifier = Modifier.background(Color.White)
+            .height(100.dp).width(200.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        ElevationCardComponent()
+    }
+}
+
+@Preview
+@Composable
+fun BorderCardComponent_Preview() {
+    Box(
+        modifier = Modifier.background(Color.White)
+            .height(100.dp).width(200.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        BorderCardComponent()
+    }
+}
+
+@Preview
+@Composable
+fun ContentColorCardComponent_Preview() {
+    Box(
+        modifier = Modifier.background(Color.White)
+            .height(100.dp).width(200.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        ContentColorCardComponent()
+    }
+}
+
+@Preview
+@Composable
+fun ColorCardComponent_Preview() {
+    Box(
+        modifier = Modifier.background(Color.White)
+            .height(100.dp).width(200.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        ColorCardComponent()
+    }
+}
+
+@Preview
+@Composable
+fun ShapeCardComponent_Preview() {
+    Box(
+        modifier = Modifier.background(Color.White)
+            .height(100.dp).width(200.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        ShapeCardComponent()
     }
 }

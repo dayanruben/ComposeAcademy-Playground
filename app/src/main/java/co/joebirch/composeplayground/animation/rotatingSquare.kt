@@ -1,13 +1,18 @@
 package co.joebirch.composeplayground.animation
 
-import androidx.compose.animation.core.*
-import androidx.compose.animation.core.AnimationConstants.Infinite
-import androidx.compose.animation.transition
-import androidx.compose.foundation.Box
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.repeatable
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.ContentGravity
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,30 +21,12 @@ import androidx.compose.ui.unit.dp
 import co.joebirch.composeplayground.ComposableLayout
 
 object RotatingShapeAnimationView : ComposableLayout {
-
-    private val rotation = FloatPropKey()
-
-    private val rotationTransitionDefinition = transitionDefinition<String> {
-        state("A") { this[rotation] = 0f }
-        state("B") { this[rotation] = 360f }
-
-        transition(fromState = "A", toState = "B") {
-            rotation using repeatable(
-                iterations = Infinite,
-                animation = tween(
-                    durationMillis = 3000,
-                    easing = LinearEasing
-                )
-            )
-        }
-    }
-
     @Composable
     override fun build() {
         Column(
             modifier = Modifier.fillMaxSize().padding(32.dp),
             verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalGravity = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             RotatingSquareComponent()
         }
@@ -47,17 +34,19 @@ object RotatingShapeAnimationView : ComposableLayout {
 
     @Composable
     fun RotatingSquareComponent() {
-        Box(modifier = Modifier.fillMaxSize(), gravity = ContentGravity.Center, children = {
-            val state = transition(
-                definition = rotationTransitionDefinition,
-                initState = "A",
-                toState = "B"
+        val rotation: Float by animateFloatAsState(
+            targetValue = 360f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(durationMillis = 3000),
+                repeatMode = RepeatMode.Restart
             )
-            Canvas(modifier = Modifier.preferredSize(80.dp)) {
-                rotate(state[rotation]) {
+        )
+        Box(modifier = Modifier.fillMaxSize()) {
+            Canvas(modifier = Modifier.size(80.dp).align(Alignment.Center)) {
+                rotate(rotation) {
                     drawRect(Color.Black, size = size)
                 }
             }
-        })
+        }
     }
 }

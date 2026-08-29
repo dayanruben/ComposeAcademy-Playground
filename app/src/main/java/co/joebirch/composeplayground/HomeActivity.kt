@@ -1,18 +1,19 @@
 package co.joebirch.composeplayground
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.unit.dp
@@ -29,7 +30,7 @@ import co.joebirch.composeplayground.resource.Resource
 class HomeActivity : AppCompatActivity() {
 
     class HomeState(category: Category? = null) {
-        var category by mutableStateOf<Category?>(category)
+        var category by mutableStateOf(category)
     }
 
     private val currentState = HomeState()
@@ -47,8 +48,7 @@ class HomeActivity : AppCompatActivity() {
                     Animation.AnimatedValues,
                     Animation.RotatingShape,
                     Animation.PulsingShape,
-                    Animation.InterationAnimation,
-                    Animation.TextAnimations
+                    Animation.InterationAnimation
                 )
             ),
             Pair(
@@ -56,6 +56,7 @@ class HomeActivity : AppCompatActivity() {
                 listOf(
                     Core.Gesture,
                     Core.Opacity,
+                    Core.Dialog,
                     Core.Popup,
                     Core.Shadow
                 )
@@ -81,8 +82,7 @@ class HomeActivity : AppCompatActivity() {
                     Material.Snackbar,
                     Material.TabRow,
                     Material.TextField,
-                    Material.TopAppBar,
-                    Material.TriStateRadioButton
+                    Material.TopAppBar
                 )
             ),
             Pair(
@@ -91,6 +91,7 @@ class HomeActivity : AppCompatActivity() {
                     Layout.HorizontalArrangement,
                     Layout.Row,
                     Layout.Spacer,
+                    Layout.Stack,
                     Layout.VerticalArrangement
                 )
             ),
@@ -115,34 +116,41 @@ class HomeActivity : AppCompatActivity() {
         setContent {
             val state = remember { currentState }
 
-            Scaffold(bodyContent = {
+            Scaffold(content = {
                 if (state.category == null) {
-                    LazyColumnFor(items = mappedData.keys.toList()) {
-                        val selected = state { false }
-                        Text(
-                            it.label,
-                            style = TextStyle(color = Color.Black, fontSize = 20.sp),
-                            modifier = Modifier.padding(16.dp).clickable(onClick = {
-                                selected.value = !selected.value
-                            }).fillParentMaxWidth()
-                        )
-                        if (selected.value) {
-                            Column {
-                                mappedData.getValue(it).toList().forEach {
-                                    Text(
-                                        it.label,
-                                        style = TextStyle(
-                                            color = Color.Black, fontSize = 14.sp,
-                                            textIndent = TextIndent(firstLine = 16.sp)
-                                        ),
-                                        modifier = Modifier.padding(16.dp).clickable(onClick = {
-                                            state.category = it
-                                        }).fillParentMaxWidth()
-                                    )
+                    LazyColumn(content = {
+                        mappedData.keys.toList().forEach {
+                            item {
+                                val selected = remember { mutableStateOf(false) }
+                                Text(
+                                    text = it.label,
+                                    style = TextStyle(color = Color.Black, fontSize = 20.sp),
+                                    modifier = Modifier.padding(16.dp).clickable(onClick = {
+                                        selected.value = !selected.value
+                                    }).fillMaxWidth()
+                                )
+                                if (selected.value) {
+                                    Column {
+                                        mappedData.getValue(it).toList().forEach {
+                                            Text(
+                                                it.label,
+                                                style = TextStyle(
+                                                    color = Color.Black, fontSize = 14.sp,
+                                                    textIndent = TextIndent(firstLine = 16.sp)
+                                                ),
+                                                modifier = Modifier
+                                                    .padding(16.dp)
+                                                    .clickable(onClick = {
+                                                        state.category = it
+                                                    })
+                                                    .fillMaxWidth()
+                                            )
+                                        }
+                                    }
                                 }
                             }
                         }
-                    }
+                    })
                 } else {
                     state.category!!.intent!!.build()
                 }

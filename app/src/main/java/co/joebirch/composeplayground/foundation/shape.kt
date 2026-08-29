@@ -1,11 +1,9 @@
 package co.joebirch.composeplayground.foundation
 
-import androidx.compose.foundation.Box
-import androidx.compose.foundation.Text
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import co.joebirch.composeplayground.ComposableLayout
 
@@ -24,23 +23,48 @@ object ShapeView : ComposableLayout {
         Column(
             modifier = Modifier.fillMaxSize().padding(32.dp),
             verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalGravity = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CutCornerShapeComponent()
             RoundedCornerShapeComponent()
             AlternateCutCornerShapeComponent()
             AlternateRoundedCornerShapeComponent()
-            CustomShapeComponent()
+            //CustomShapeComponent()
         }
     }
 
 }
 
 @Composable
+fun CircleShapeShapeComponent() {
+    Box(
+        modifier = Modifier.background(Color.Blue, shape = CircleShape)
+    ) {
+        Text(
+            text = "Circle shape",
+            modifier = Modifier.padding(16.dp),
+            color = Color.White
+        )
+    }
+}
+
+@Composable
+fun RectangleShapeShapeComponent() {
+    Box(
+        modifier = Modifier.background(Color.Blue, shape = RectangleShape)
+    ) {
+        Text(
+            text = "Rectangle shape",
+            modifier = Modifier.padding(16.dp),
+            color = Color.White
+        )
+    }
+}
+
+@Composable
 fun CutCornerShapeComponent() {
     Box(
-        shape = CutCornerShape(12.dp),
-        backgroundColor = Color.Blue
+        modifier = Modifier.background(Color.Blue, shape = CutCornerShape(12.dp))
     ) {
         Text(
             text = "Cut corner shape",
@@ -53,8 +77,7 @@ fun CutCornerShapeComponent() {
 @Composable
 fun AlternateCutCornerShapeComponent() {
     Box(
-        shape = CutCornerShape(12.dp, 4.dp, 12.dp, 4.dp),
-        backgroundColor = Color.Blue
+        modifier = Modifier.background(Color.Blue, shape = CutCornerShape(12.dp, 4.dp, 12.dp, 4.dp))
     ) {
         Text(
             text = "Cut corner shape",
@@ -67,8 +90,7 @@ fun AlternateCutCornerShapeComponent() {
 @Composable
 fun FloatCutCornerShapeComponent() {
     Box(
-        shape = CutCornerShape(12f, 4f, 12f, 4f),
-        backgroundColor = Color.Blue
+        modifier = Modifier.background(Color.Blue, shape = CutCornerShape(12f, 4f, 12f, 4f))
     ) {
         Text(
             text = "Cut corner shape",
@@ -81,8 +103,7 @@ fun FloatCutCornerShapeComponent() {
 @Composable
 fun PercentCutCornerShapeComponent() {
     Box(
-        shape = CutCornerShape(40, 20, 50, 10),
-        backgroundColor = Color.Blue
+        modifier = Modifier.background(Color.Blue, shape = CutCornerShape(40, 20, 50, 10))
     ) {
         Text(
             text = "Cut corner shape",
@@ -95,8 +116,7 @@ fun PercentCutCornerShapeComponent() {
 @Composable
 fun RoundedCornerShapeComponent() {
     Box(
-        shape = RoundedCornerShape(12.dp),
-        backgroundColor = Color.Blue
+        modifier = Modifier.background(Color.Blue, shape = RoundedCornerShape(12.dp))
     ) {
         Text(
             text = "Rounded corner shape",
@@ -109,8 +129,10 @@ fun RoundedCornerShapeComponent() {
 @Composable
 fun AlternateRoundedCornerShapeComponent() {
     Box(
-        shape = RoundedCornerShape(12.dp, 0.dp, 12.dp, 0.dp),
-        backgroundColor = Color.Blue
+        modifier = Modifier.background(
+            Color.Blue,
+            shape = RoundedCornerShape(12.dp, 0.dp, 12.dp, 0.dp)
+        )
     ) {
         Text(
             text = "Rounded corner shape",
@@ -120,10 +142,12 @@ fun AlternateRoundedCornerShapeComponent() {
     }
 }
 
+/*
 @Composable
 fun CustomShapeComponent() {
     Box(
-        shape = GenericShape(builder = {
+        modifier = Modifier.background(Color.Blue, shape = GenericShape(builder = {
+
             this.addOval(
                 Rect(
                     top = 0f,
@@ -132,7 +156,7 @@ fun CustomShapeComponent() {
                     right = 320f
                 )
             )
-        }),
-        backgroundColor = Color.Blue
+        }))
     )
 }
+ */

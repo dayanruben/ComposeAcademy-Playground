@@ -1,17 +1,16 @@
 package co.joebirch.composeplayground.material
 
-import androidx.compose.foundation.Box
-import androidx.compose.foundation.Text
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Slider
+import androidx.compose.material.SliderDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.state
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import co.joebirch.composeplayground.ComposableLayout
 
@@ -20,12 +19,14 @@ object SliderView : ComposableLayout {
     @Composable
     override fun build() {
         Box(
-            modifier = Modifier.fillMaxSize().padding(32.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(32.dp)
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceEvenly,
-                horizontalGravity = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 MinimalSliderComponent()
                 ColoredSliderComponent()
@@ -38,79 +39,71 @@ object SliderView : ComposableLayout {
 
     @Composable
     fun MinimalSliderComponent() {
-        val state = state { 0f }
-        Column(horizontalGravity = Alignment.CenterHorizontally) {
-            Text(text = state.value.toString())
-            Slider(
-                value = state.value,
-                onValueChange = {
-                    state.value = it
-                }
-            )
-        }
-
+        val state = remember { mutableStateOf(0f) }
+        Slider(
+            value = state.value,
+            onValueChange = {
+                state.value = it
+            }
+        )
     }
 
     @Composable
     fun RangedSliderComponent() {
-        val state = state { 0f }
-        Column(horizontalGravity = Alignment.CenterHorizontally) {
-            Text(text = state.value.toString())
-            Slider(
-                value = state.value,
-                onValueChange = {
-                    state.value = it
-                },
-                valueRange = 0f..5f
-            )
-        }
+        val state = remember { mutableStateOf(0f) }
+        Slider(
+            value = state.value,
+            onValueChange = {
+                state.value = it
+            },
+            valueRange = 0f..5f
+        )
     }
 
     @Composable
     fun SteppedSliderComponent() {
-        val state = state { 0f }
-        Column(horizontalGravity = Alignment.CenterHorizontally) {
-            Text(text = state.value.toString())
-            Slider(
-                value = state.value,
-                onValueChange = {
-                    state.value = it
-                },
-                steps = 3
-            )
-        }
+        val state = remember { mutableStateOf(0f) }
+        Slider(
+            value = state.value,
+            onValueChange = {
+                state.value = it
+            },
+            steps = 3,
+            valueRange = 0f..2f
+        )
     }
 
     @Composable
     fun ColoredSliderComponent() {
-        val state = state { 0f }
-        Column(horizontalGravity = Alignment.CenterHorizontally) {
-            Text(text = state.value.toString())
-            Slider(
-                value = state.value,
-                onValueChange = {
-                    state.value = it
-                },
-                color = Color.Red
+        val state = remember { mutableStateOf(0f) }
+        Slider(
+            value = state.value,
+            onValueChange = {
+                state.value = it
+            },
+            colors = SliderDefaults.colors(
+                thumbColor = Color.Red
             )
-        }
+        )
     }
 
     @Composable
     fun EndListenerSliderComponent() {
-        val state = state { 0f }
-        val endState = state { 0f }
-        Column(horizontalGravity = Alignment.CenterHorizontally) {
+        val state = remember { mutableStateOf(0f) }
+        val endState = remember { mutableStateOf(0f) }
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = endState.value.toString())
             Slider(
                 value = state.value,
                 onValueChange = {
                     state.value = it
                 },
-                onValueChangeEnd = {
+                onValueChangeFinished = {
                     endState.value = state.value
                 },
-                color = Color.Red
+                colors = SliderDefaults.colors(
+                    thumbColor = Color.Red
+                )
             )
         }
     }

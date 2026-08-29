@@ -13,6 +13,7 @@ sealed class Layout(
     object HorizontalArrangement : Layout("Horizontal Arrangement", HorizontalArrangementView)
     object Row : Layout("Row", RowView)
     object Spacer : Layout("Spacer", SpacerView)
+    object Stack : Layout("Stack", BoxView)
     object VerticalArrangement : Layout("Vertical Arrangement", VerticalArrangementView)
 
 }

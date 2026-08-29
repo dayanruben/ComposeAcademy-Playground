@@ -1,6 +1,6 @@
 package co.joebirch.composeplayground.layout
 
-import androidx.compose.foundation.Text
+import androidx.compose.material.Text
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,11 +17,11 @@ object SpacerView : ComposableLayout {
             Text(
                 text = "First item"
             )
-            Spacer(modifier = Modifier.preferredHeight(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "Second item"
             )
-            Spacer(modifier = Modifier.preferredHeight(32.dp))
+            Spacer(modifier = Modifier.width(32.dp))
             Text(
                 text = "Third item"
             )
